@@ -2,55 +2,204 @@
 \documentclass[twocolumn]{aastex631}
 \usepackage{showyourwork}
 
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\diff}[2]{\frac{\dd #1}{\dd #2}}
+\newcommand{\MSun}{M_\odot}
+
 % Begin!
 \begin{document}
 
 % Title
-\title{An open source scientific article}
+\title{LISA can measure the rate of eccentric binary black holes (that cannot be) observed by ground-based detectors}
 
 % Author list
 \author{@katiebreivik}
 
 % Abstract with filler text
 \begin{abstract}
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-    Curabitur dictum gravida mauris, consectetuer id, vulputate a, magna.
-    Donec vehicula augue eu neque, morbi tristique senectus et netus et.
-    Mauris ut leo, cras viverra metus rhoncus sem, nulla et lectus vestibulum.
-    Phasellus eu tellus sit amet tortor gravida placerat.
-    Integer sapien est, iaculis in, pretium quis, viverra ac, nunc.
-    Praesent eget sem vel leo ultrices bibendum.
-    Aenean faucibus, morbi dolor nulla, malesuada eu, pulvinar at, mollis ac.
-    Curabitur auctor semper nulla donec varius orci eget risus.
-    Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam.
-    Duis eget orci sit amet orci dignissim rutrum.
+    hype words about lisa, hype words about eccentricity, hype words about bbhs
 \end{abstract}
 
 % Main body with filler text
 \section{Introduction}
 \label{sec:intro}
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
-Curabitur dictum gravida mauris, consectetuer id, vulputate a, magna.
-Donec vehicula augue eu neque, morbi tristique senectus et netus et.
-Mauris ut leo, cras viverra metus rhoncus sem, nulla et lectus vestibulum.
-Phasellus eu tellus sit amet tortor gravida placerat.
-Integer sapien est, iaculis in, pretium quis, viverra ac, nunc.
-Praesent eget sem vel leo ultrices bibendum.
-Aenean faucibus, morbi dolor nulla, malesuada eu, pulvinar at, mollis ac.
-Curabitur auctor semper nulla donec varius orci eget risus.
-Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam.
-Duis eget orci sit amet orci dignissim rutrum.
+The environmetal origins of BBHs are highly degenerate with the eccentricity of
+the binaries themselves. Thus, a measurement of the rate of eccentric BBHs
+provides the ability to constrain the relative contributions of isolated and
+dynamical formation environments.
 
-Nam dui ligula, fringilla a, euismod sodales, sollici- tudin vel, wisi.
-Morbi auctor lorem non justo, nam lacus libero, pretium at, lobortis vitae.
-Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna.
-Morbi ac orci et nisl hendrerit mollis, suspendisse ut massa, cras nec ante.
-Pellentesque a nulla cum sociis natoque penatibus et magnis dis parturient.
-Aliquam tincidunt urna, nulla ullamcorper vestibulum turpis.
-Pellentesque cursus luctus mauris \citep{Luger2021}.
+\section{Rate Derivation}
+\label{sec:rates}
+
+Under the assumptions that most BBHs form in orbits with orbital frequencies below $\sim 1~\rm{mHz}$ and that the emission of GWs is the only driver of angular momentum loss in BBHs between the mHz and kHz GW regime, the rate of evolution of BBHs from the mHz to the kHz band can be described analytically using the \citet{Peters1964} evolution equations.
+
+
+\subsection{Circular case}
+\label{sec:circ}
+In the case where all mering binaries are perfectly circular, the rate calculation simplifies considerably. Averaging the energy from GW emission, the orbital separation evolution as a function of time is
+
+\begin{equation}
+    \Big\langle \frac{\mathrm{d}a}{\mathrm{d}t} \Big\rangle = - \frac{64}{5} \frac{G^3 m_1 m_2 (m_1 + m_2)}{c^5 a^3}.
+    \label{eq:dadt_circ}
+\end{equation}
+
+Using Kepler's third law, the orbital separation evolution can be converted to an orbital frequency evolution
+
+\begin{equation}
+    \Big\langle\frac{\mathrm{d}f_{\rm orb}}{\mathrm{d}t}\Big\rangle = \frac{48}{5 \pi} \frac{\big(G \mathcal{M}_c \big)^{5/3}}{c^5} (2 \pi f_{\rm orb})^{11/3}, 
+    \label{eq:fdot_circ}
+\end{equation}
+\noindent a slight modification to the familiar chirp equation such that $\langle\mathrm{d}f_{\rm GW}/\mathrm{d}t\rangle = 2\,\langle\mathrm{d}f_{\rm orb}/\mathrm{d}t\rangle$. 
+
+The comoving merger rate density per unit primary mass, $M_{\mathrm{BH,1}}$, per unit mass ratio, $q$ of BBHs can then be written as
+
+\begin{equation}
+    \frac{\mathrm{d}^3n}{\mathrm{d}M_{\mathrm{BH,1}} \mathrm{d}q \mathrm{d}t} = \mathcal{R}(M_{\mathrm{BH,1}}, q) p(M_{\mathrm{BH,1}}, q),
+    \label{eq:merger_rate_density}
+\end{equation}
+
+\noindent where $\mathcal{R}$ and $p(M_{\mathrm{BH,1}}, q)$ are described by the \texttt{Power Law + Peak} model detailed in \cite{GWTC-3_pops_paper}. 
+
+This rate density can be converted into a comoving rate density of BBHs per unit mass, mass ratio, and orbital frequency as
+
+\begin{equation}
+    %\frac{\mathrm{d}^3N}{\mathrm{d}\mathcal{M}_c \mathrm{d}V_c \mathrm{d}f_{\rm orb}} = \frac{\mathrm{d}^3n}{\mathrm{d}\mathcal{M}_c \mathrm{d}t \mathrm{d}V_c} \frac{\mathrm{d}t}{\mathrm{d}f_{\rm orb}},
+    \frac{\mathrm{d}^3N}{\mathrm{d}M_{\mathrm{BH,1}} \mathrm{d}q \mathrm{d}f_{\rm orb}} = \frac{\mathrm{d}^3n}{\mathrm{d}M_{\mathrm{BH,1}} \mathrm{d}q \mathrm{d}t}{\mathrm{d}f_{\rm orb}},
+    \label{eq:rate_per_freq}
+\end{equation}
+
+where $\mathrm{d}t / \mathrm{d}f_{\rm orb}$ is just the inverse of equation \ref{eq:fdot_circ}. This rate can be integrated over LISA's frequency sensitivty range to determine the total number of BBHs LISA is expected to observe based on the observed rates by LVK as
+
+\begin{equation}
+    \frac{\mathrm{dN_{LISA}}}{\mathrm{d}M_1}= \int\mathrm{d}f_{\rm orb} \frac{\mathrm{d}^3N}{\mathrm{d}M_{\mathrm{BH,1}} \mathrm{d}q \mathrm{d}f_{\rm orb}}.
+    \label{eq:LISA_rate_density_no_selection}
+\end{equation}
+
+\noindent Note here that the impact of LISA's selection is yet to be applied and that the number of \emph{individually resolvable} sources is orders of magnitude lower that the rates obtained by equation~\ref{eq:LISA_rate_density_no_selection} due to the much decreased horizon distances caused by mHz-frequency signals. 
+
+Assuming the BBH merger rate per unit chirp mass from GWTC-3 and a detection threshold of $SNR > 12$ (CITE GEROSA), the number of BBHs detectable by LISA is $1.085$ with the chirp mass distribution shown in Figure~\ref{fig:circ_Mdist}. While the GWTC-3 rate peaks strongly at low chirp masses near $8\,\mathrm{M_{\odot}}$, the chirp mass probability distribution for LISA traces the $35\,\mathrm{M_{\odot}}$ peak in the GWTC-3 rate. This is due to LISA's much smaller horizon volume when compared with ground-based detectors such that only the more-massive BBHs are expected to be observed with an appreciable probability. This can be seen as the LISA pdf increases toward $8\,\rm{M_{\odot}}$ but flattens even in though the GWTC-3 rate decreases; this is because of the increased LISA horizon volume with mass. At masses above $35\,\mathrm{M_{\odot}}$, the GWTC-3 rate decreases by more than two orders of magnitude and overcomes the increase in horizon volume with increasing mass thus suppressing the probability of detection.
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/fig1.png}
+    \caption{The chirp mass distribution from GWTC-3 (orange) and the probability distribution function of chirp masses detectable by LISA based on the GWTC-3 rate (blue).}
+    \label{fig:circ_Mdist}
+    \script{fig1.py}
+\end{figure}
+
+
+\subsection{Eccentric case}
+\label{sec:ecc}
+ Averaging the energy from GW emission, we can write the orbital separation and eccentricity evolution as a function of time as
+
+\begin{equation}
+    \Big\langle \frac{\mathrm{d}a}{\mathrm{d}t} \Big\rangle = - \frac{64}{5} \frac{G^3 m_1 m_2 (m_1 + m_2)}{c^5 a^3 (1 - e^2)^{7/2}} \Big(1 + \frac{73}{24} e^2 + \frac{37}{96} e^4 \Big)
+    \label{eq:dadt}
+\end{equation}
+
+\noindent and 
+
+\begin{equation}
+    \Big\langle\frac{\mathrm{d}e}{\mathrm{d}t}\Big\rangle = -\frac{304}{15} e \frac{G^3 m_1 m_2 (m_1 + m_2)}{c^5 a^4 (1-e^2)^{7/2}} \Big( 1 + \frac{121}{304} e^{2}\Big).
+    \label{eq:dedt}
+\end{equation}
+
+Using Kepler's third law, the orbital separation time evolution can be converted to an orbital frequency evolution 
+
+\begin{equation}
+    \Big\langle\frac{\mathrm{d}f}{\mathrm{d}t}\Big\rangle = \frac{48 n}{5 \pi} \frac{\Big(G \mathcal{M}_c \Big)^{5/3}}{c^5} (2 \pi f_{\rm orb})^{11/3} F(e), 
+    \label{eq:fdot}
+\end{equation}
+
+\noindent where 
+
+\begin{equation}
+    F(e) = \frac{1 + \frac{73}{24} e^2 + \frac{37}{96} e^4}{(1 - e^2)^{7/2}}.
+    \label{eq:eccentricity_enhancement_factor}
+\end{equation}
+
+
+\section{Relating Merger Rates to Binary Rates at Various Eccentricities}
+
+Let 
+\begin{equation}
+    \diff{N}{M_c \dd e \dd V \dd t} 
+\end{equation}
+be the compact object differential merger rate per chirp mass, per eccentricity,
+per comoving volume, and per time.  This is the quantity that LIGO measures or
+constrains, at least for compact objects in the range $1 \, \MSun \lesssim M_c
+\lesssim 100 \, \MSun$.  The merger rate is a function of the compact binary
+properties and also spacetime location (though homogeneity and isotropy
+assumptions restrict this to a dependence on time), but we suppress these
+arguments for simplicity except where necessary.  We can convert this to a
+binary rate per orbital frequency via the following argument.  Let 
+\begin{equation}
+    T_\mathrm{merge}\left( M_c, e, f \right)
+\end{equation}
+be the time until a binary with chirp mass $M_c$, eccentricity $e$,
+and orbital frequency $f$ mergers.  Then the compact binary rate per unit frequency at any given time is
+obtained as an integral of the merger rate over the \emph{future} mergers of the
+binaries occupying an infinitesimal range of frequencies $\dd f$:
+\begin{multline}
+    %\diff{N}{M_c \dd e \dd V \dd f}\left( t \right) = \int_{t}^{\infty} \dd t' \, \diff{N}{M_c \dd e \dd V \dd t'} \\ \times \delta\left( \left( t' - t \right) - T_\mathrm{merger}\left( M_c, e, f \right) \right) \frac{\partial T_\mathrm{merger}}{\partial f}.
+    \diff{N}{M_1 \dd e \dd V \dd f}\left( t \right) = \int_{t}^{\infty} \dd t' \, \diff{N}{M_1 \dd e \dd V \dd t'} \\ \times \delta\left( \left( t' - t \right) - T_\mathrm{merger}\left( M_1, e, f \right) \right) \frac{\partial T_\mathrm{merger}}{\partial f}
+\end{multline}
+The Dirac delta function ensures that the only merger times that contribute to
+the integral are those for a binary of chirp mass $M_c$, eccentricity $e$, and
+orbital frequency $f$ at time $t$.  The final Jacobian factor converts from a
+density in \emph{time} (implied by the delta function) to a density in
+\emph{frequency}.  The integral is trivial; assuming that $T_\mathrm{merger}$ is
+much smaller than any timescale on which the merger rate evolves, the binary
+rate per frequency at time $t$ is just the merger rate (in the very near future)
+times the Jacobian factor to translate a density in time to a density in
+frequency:
+\begin{equation}
+    \label{eq:mergers-per-frequency}
+    %\diff{N}{M_c \dd e \dd V \dd f} = \diff{N}{M_c \dd e \dd V \dd t} \frac{\partial T_\mathrm{merger}}{\partial f}.
+    \diff{N}{M_1 \dd e_{10} \dd V \dd f} = \diff{N}{M_1 \dd e_{10} \dd V \dd t} \frac{\partial T_\mathrm{merger}}{\partial f}
+\end{equation}
+
+\begin{equation}
+    \label{eq:mergers-per-frequency}
+    %\diff{N}{M_c \dd e \dd V \dd f} = \diff{N}{M_c \dd e \dd V \dd t} \frac{\partial T_\mathrm{merger}}{\partial f}.
+    \diff{N}{M_1 \dd e_{\rm LISA} \dd V \dd f} = \diff{N}{M_1 \dd e_{10} \dd V \dd t} \frac{\partial T_\mathrm{merger}}{\partial f} \frac{\partial E}{\partial e_{\rm LISA}}
+\end{equation}
+
+Note that $e$ in Eq.\ \eqref{eq:mergers-per-frequency}, appearing in the
+denominator of the rate densities and (implicitly) in their arguments and the
+arguments of $T_\mathrm{merger}$ refers to the eccentricity of the system
+\emph{at merger}.  It is natural to write the rate density per eccentricity
+\emph{at the time when the orbital frequency is $f$}.  There is a natural
+mapping from merger eccentricity to eccentricity at frequency $f$, defined
+(implicitly) by Eqs.\ \eqref{eq:dedt}, and \eqref{eq:fdot}; let
+$e'$ be the eccentricity at frequency $f$ and 
+\begin{equation}
+    e_{10} = E\left( e_{\rm LISA}, f, M_c \right)
+\end{equation}
+be the eccentricity at merger of a system with chirp mass $M_c$ that has
+eccentricity $e'$ at orbital frequency $f$.  Then 
+\begin{equation}
+    \diff{N}{M_c \dd e' \dd V \dd f} = \diff{N}{M_c \dd e \dd V \dd f} \frac{\partial E}{\partial e'}
+\end{equation}
+is the binary rate per chirp mass, per eccentricity (at orbital frequency $f$),
+per comoving volume, per orbital frequency.  
+
+If the eccentricity evolution satisfies 
+\begin{equation}
+    \frac{\partial E}{\partial f}\left( e_{\rm LISA}, f, M_c \right) = g\left( E, f \right),
+\end{equation}
+where $g$ is obtained as the ratio of the right hand sides of Eqs.\
+\eqref{eq:dedt}, and \eqref{eq:fdot}, then (differentiating both sides of this
+equation by the eccentricity $e'$) the Jacobian 
+\begin{equation}
+    J \equiv \frac{\partial E}{\partial e'}
+\end{equation}
+satisfies 
+\begin{equation}
+    \frac{\partial}{\partial f} J = \frac{\partial g}{\partial E} J.
+\end{equation}
+This is a linear ODE for $J$, and 
+
 
 \bibliography{bib}
 
