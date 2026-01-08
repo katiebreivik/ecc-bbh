@@ -81,16 +81,16 @@ where $\mathrm{d}t / \mathrm{d}f_{\rm orb}$ is just the inverse of equation \ref
 Assuming the BBH merger rate per unit chirp mass from GWTC-3 and a detection threshold of $SNR > 12$ (CITE GEROSA), the number of BBHs detectable by LISA is $1.085$ with the chirp mass distribution shown in Figure~\ref{fig:circ_Mdist}. While the GWTC-3 rate peaks strongly at low chirp masses near $8\,\mathrm{M_{\odot}}$, the chirp mass probability distribution for LISA traces the $35\,\mathrm{M_{\odot}}$ peak in the GWTC-3 rate. This is due to LISA's much smaller horizon volume when compared with ground-based detectors such that only the more-massive BBHs are expected to be observed with an appreciable probability. This can be seen as the LISA pdf increases toward $8\,\rm{M_{\odot}}$ but flattens even in though the GWTC-3 rate decreases; this is because of the increased LISA horizon volume with mass. At masses above $35\,\mathrm{M_{\odot}}$, the GWTC-3 rate decreases by more than two orders of magnitude and overcomes the increase in horizon volume with increasing mass thus suppressing the probability of detection.
 
 \begin{figure}
-	\includegraphics[width=0.5\textwidth]{figures/fig1.png}
+	\includegraphics[width=0.5\textwidth]{figures/fig1.pdf}
     \caption{The chirp mass distribution from GWTC-3 (orange) and the probability distribution function of chirp masses detectable by LISA based on the GWTC-3 rate (blue).}
     \label{fig:circ_Mdist}
     \script{fig1.py}
 \end{figure}
 
 
-\subsection{Eccentric case}
+\subsection{The effect of eccentricity on orbital evolution}
 \label{sec:ecc}
- Averaging the energy from GW emission, we can write the orbital separation and eccentricity evolution as a function of time as
+ Averaging the energy from GW emission over the binary orbit, we can write the orbital separation and eccentricity evolution as a function of time as
 
 \begin{equation}
     \Big\langle \frac{\mathrm{d}a}{\mathrm{d}t} \Big\rangle = - \frac{64}{5} \frac{G^3 m_1 m_2 (m_1 + m_2)}{c^5 a^3 (1 - e^2)^{7/2}} \Big(1 + \frac{73}{24} e^2 + \frac{37}{96} e^4 \Big)
@@ -104,7 +104,7 @@ Assuming the BBH merger rate per unit chirp mass from GWTC-3 and a detection thr
     \label{eq:dedt}
 \end{equation}
 
-Using Kepler's third law, the orbital separation time evolution can be converted to an orbital frequency evolution 
+\noindent Using Kepler's third law, the orbital separation time evolution can be converted to an orbital frequency evolution 
 
 \begin{equation}
     \Big\langle\frac{\mathrm{d}f}{\mathrm{d}t}\Big\rangle = \frac{48 n}{5 \pi} \frac{\Big(G \mathcal{M}_c \Big)^{5/3}}{c^5} (2 \pi f_{\rm orb})^{11/3} F(e), 
@@ -117,6 +117,46 @@ Using Kepler's third law, the orbital separation time evolution can be converted
     F(e) = \frac{1 + \frac{73}{24} e^2 + \frac{37}{96} e^4}{(1 - e^2)^{7/2}}.
     \label{eq:eccentricity_enhancement_factor}
 \end{equation}
+
+The equations for $de/dt$ and $da/dt$ can be solved for $a(e)$ as 
+
+\begin{equation}
+    a(e) = \frac{c_0e^{12/19}}{(1-e^2)}\Big[1 + \frac{121/304}e^2\Big]^{870/2299},
+    \label{eq:a_of_e}
+\end{equation}
+\noindent where $c_0$ is an integration constant found by evaluating equation~\ref{eq:a_of_e} at an initial semimajor axis and eccentricity, $a_0$ and $e_0$ respectively. 
+
+\noindent For binary orbits with appreciable eccentricity ($e\gtrsim0.1$), the orbital contraction due to GW emission is significantly expedited. The merger time for a binary with specified frequency, masses, and eccentricity can be obtained by numerically integrating equation~\ref{eq:dedt} as 
+
+\begin{equation}
+    T_{\rm{merge}}(a_0, e_0) = \frac{12}{19}\frac{c_0^4}{\beta} \int \frac{de e^{29/19} [1 + (121/304)e^2]^{1181/2299}}{(1-e^2)^{3/2}},
+    \label{eq:T_merge}
+\end{equation}
+
+\noindent where $c_0$ is the integration constant in equation~\ref{eq:a_of_e} and $\beta$ is
+
+\begin{equation}
+    \beta = \frac{64}{5}\frac{G^3 m_1 m_2 (m_1 + m_2)}{c^5}.
+    \label{eq:beta}
+\end{equation}
+
+Alternatively, for the non-integration-interested reader, a convenient fit obtained by \cite{Mandel2021} is available over eccentricity ranges between $0$ and $0.99999$ as a modification to the circular merger time, $T_c$,  
+\begin{equation}
+    T_{\rm{merge}} \simeq T_c (1 + 0.27e_0^10 + 0.33e_0^20 + 0.2e_0^1000)(1-e_0)^{7/2}.
+    \label{eq:beta}
+\end{equation}
+
+\noindent For the purposes of this study, this fit is perfectly adequate and is thus applied in place of equation~\ref{eq:T_merge} for computational efficiency.
+
+Eccentricity also affects the horizon at which GW signals become resolvable by LISA. On one hand, eccentricity leads to GW emission at potentially several integer harmonics of the orbital frequency as described in \cite{Peters1963}. For binaries with low orbital frequencies ($f_{\rm{orb}}\lesssim 1\,\rm{mHz}$), this `Fourier comb' of emission can significantly increase the detectability of individual binaries. However, for higher frequencies the GW emission can be predominantly produced at frequencies \emph{above} LISA's frequency cutoff near $f_{\rm{GW}}\sim0.1\,\rm{Hz}$. On top of this, the orbital evolution acceleration effect from large eccentricities can cause a given binary to sweep through the LISA band rapidly such that the detector is unable to build up an appreciable signal at a given frequency. 
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{figures/fig2.pdf}
+    \caption{The chirp mass distribution from GWTC-3 (orange) and the probability distribution function of chirp masses detectable by LISA based on the GWTC-3 rate (blue).}
+    \label{fig:ecc_evol}
+    \script{fig2.py}
+\end{figure}
+
 
 
 \section{Relating Merger Rates to Binary Rates at Various Eccentricities}
@@ -137,7 +177,7 @@ binary rate per orbital frequency via the following argument.  Let
     T_\mathrm{merge}\left( M_c, e, f \right)
 \end{equation}
 be the time until a binary with chirp mass $M_c$, eccentricity $e$,
-and orbital frequency $f$ mergers.  Then the compact binary rate per unit frequency at any given time is
+and orbital frequency $f$ merges.  Then the compact binary rate per unit frequency at any given time is
 obtained as an integral of the merger rate over the \emph{future} mergers of the
 binaries occupying an infinitesimal range of frequencies $\dd f$:
 \begin{multline}
